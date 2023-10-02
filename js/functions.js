@@ -5,7 +5,7 @@ function checkString(string, length) {
     return false;
   }
 }
-console.log(checkString('проверяемая строка', 20));
+checkString('проверяемая строка', 20);
 
 
 function isPalindrom(string) {
@@ -21,5 +21,5 @@ function isPalindrom(string) {
     return false;
   }
 }
-console.log(isPalindrom('топот'));
+isPalindrom('топот');
 
