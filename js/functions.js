@@ -1,14 +1,9 @@
-function checkString(string, length) {
-  if (string.length <= length) {
-    return true;
-  } else {
-    return false;
-  }
-}
+const checkString = (string, length)  => (string.length <= length);
+
 checkString('проверяемая строка', 20);
 
 
-function isPalindrom(string) {
+const isPalindrom = (string) => {
   const changedString = string.replaceAll(' ', '').toUpperCase();
   let result = '';
 
@@ -20,6 +15,6 @@ function isPalindrom(string) {
   } else {
     return false;
   }
-}
+};
 isPalindrom('топот');
 
