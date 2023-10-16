@@ -86,7 +86,7 @@ const createComments = () => ({
 
 //Структура объекта
 const createObject = () => ({
-  id: getPhotoId(1, 25),
+  id: getPhotoId(MIN_PHOTO_ID, MAX_PHOTO_ID),
   url: `photos/${getRandomInteger(MIN_URL_ID, MAX_URL_ID)}.jpg`,
   description: `${getRandomArrayElement(DESCRIPTIONS)}`,
   likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
