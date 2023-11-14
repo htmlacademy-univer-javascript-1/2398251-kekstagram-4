@@ -1,5 +1,5 @@
 import './util.js';
-import './popup.js';
+import {renderTemplate} from './thumbnail.js';
 import {similarObjects} from './data.js';
 
-similarObjects();
+renderTemplate(similarObjects());
