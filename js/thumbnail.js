@@ -6,29 +6,30 @@ const thumbnailTemplate = document.querySelector('#picture')
 
 const container = document.querySelector('.pictures');
 
-const createThumbnail = ({url, description, likes, comments}) => {
+const renderTemplate = (picture) => {
+  const {url, description, likes, comments} = picture;
   const thumbnail = thumbnailTemplate.cloneNode(true);
 
   thumbnail.querySelector('.picture__img').src = url;
   thumbnail.querySelector('.picture__img').alt = description;
   thumbnail.querySelector('.picture__likes').textContent = likes;
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
+  thumbnail.addEventListener('click', () => {
+    openBigPicture(picture);
+  });
 
   return thumbnail;
 };
 
-const renderTemplate = (pictures) => {
+const renderTemplates = (pictures) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
-    const thumbnail = createThumbnail(picture);
+    const thumbnail = renderTemplate(picture);
     fragment.appendChild(thumbnail);
-    thumbnail.addEventListener('click', () => {
-      openBigPicture(picture);
-    });
-
-    container.append(fragment);
   });
+
+  container.append(fragment);
 };
 
-export {renderTemplate};
+export {renderTemplates};
 
