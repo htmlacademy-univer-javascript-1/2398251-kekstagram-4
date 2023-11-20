@@ -8,10 +8,14 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
+//Обработчик события клика на Escape
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 //Получение случайного элемента массива
 const getRandomArrayElement = (arr) => arr[getRandomInteger(0, arr.length - 1)];
 
 export {getRandomArrayElement};
 export {getRandomInteger};
+export {isEscapeKey};
 
 
