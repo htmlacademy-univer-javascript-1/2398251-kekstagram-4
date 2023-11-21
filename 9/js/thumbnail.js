@@ -1,4 +1,4 @@
-import { openBigPicture } from './bigPicture';
+import { openBigPicture } from './bigPicture.js';
 
 const thumbnailTemplate = document.querySelector('#picture')
   .content

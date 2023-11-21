@@ -33,7 +33,7 @@ const closeBigPicture = () => {
 
 //Функция объявлена после closeBigPicture, чтобы эти функции не закольцовывались
 function onDocumentKeyDown()  {
-  if (!isEscapeKey) {
+  if (isEscapeKey) {
     closeBigPicture();
   }
 }
