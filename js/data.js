@@ -8,6 +8,7 @@ const MIN_PHOTO_ID = 1;
 const MAX_PHOTO_ID = 25;
 const MIN_COMMENT_ID = 1;
 const MAX_COMMENT_ID = 300;
+const MAX_COMMENTS = 30;
 const MIN_AVATAR_ID = 1;
 const MAX_AVATAR_ID = 6;
 const MIN_LIKES = 15;
@@ -84,7 +85,7 @@ const createObject = () => ({
   url: `photos/${getRandomInteger(MIN_URL_ID, MAX_URL_ID)}.jpg`,
   description: `${getRandomArrayElement(DESCRIPTIONS)}`,
   likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-  comments: createComments(),
+  comments: Array.from({length: getRandomInteger(0, MAX_COMMENTS)}, createComments)
 });
 
 //Массив из 25 сгенерированных объектов
