@@ -84,7 +84,7 @@ const createObject = () => ({
   url: `photos/${getRandomInteger(MIN_URL_ID, MAX_URL_ID)}.jpg`,
   description: `${getRandomArrayElement(DESCRIPTIONS)}`,
   likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-  comments: createComments(),
+  comments: Array.from({length: getRandomInteger(0, COUNT_OBJECTS)}, createComments)
 });
 
 //Массив из 25 сгенерированных объектов
