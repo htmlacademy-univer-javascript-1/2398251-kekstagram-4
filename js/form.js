@@ -37,6 +37,10 @@ function onDocumentKeyDown(evt) {
 imageUploadInput.addEventListener('change', () => {
   imageOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  document.querySelector('.effect-level__slider').parentNode.classList.add('hidden');
+  document.querySelector('.scale__control--value').value = '100%';
+  document.querySelector('.img-upload__preview img').style.transform = 'scale(1.00)';
+  document.querySelector('.img-upload__preview img').style.filter = 'none';
   cancelButtonElement.addEventListener('click', closeImageOverlay);
   document.addEventListener('keydown', onDocumentKeyDown);
 });
