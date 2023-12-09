@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import {sendData} from './api.js';
+import {showSuccessMessage, showErrorMessage} from './message.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_COMMENT_LENGTH = 140;
@@ -10,7 +12,18 @@ const imageOverlay = formElement.querySelector('.img-upload__overlay');
 const cancelButtonElement = formElement.querySelector('.img-upload__cancel');
 const commentField = formElement.querySelector('.text__description');
 const hashtagField = formElement.querySelector('.text__hashtags');
+const imagePreview = document.querySelector('.img-upload__preview img');
+const submitButton = formElement.querySelector('.img-upload__submit');
 const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const pristine = new Pristine(formElement, {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload--invalid',
+  successClass: 'img-upload--valid',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__error'
+});
 
 const closeImageOverlay =() => {
   bodyElement.classList.remove('modal-open');
@@ -18,11 +31,12 @@ const closeImageOverlay =() => {
   cancelButtonElement.removeEventListener('click', closeImageOverlay);
   document.removeEventListener('keydown', onDocumentKeyDown);
   imageUploadInput.value = '';
+  pristine.reset();
 };
 
 //Функция объявлена после closeImageOverlay, чтобы эти функции не закольцовывались
 function onDocumentKeyDown(evt) {
-  if(isEscapeKey) {
+  if(isEscapeKey(evt)) {
     const activeElement = document.activeElement.attributes.type;
 
     if (typeof(activeElement) !== 'undefined' && activeElement.value === 'text'){
@@ -39,19 +53,9 @@ imageUploadInput.addEventListener('change', () => {
   document.body.classList.add('modal-open');
   document.querySelector('.effect-level__slider').parentNode.classList.add('hidden');
   document.querySelector('.scale__control--value').value = '100%';
-  document.querySelector('.img-upload__preview img').style.transform = 'scale(1.00)';
-  document.querySelector('.img-upload__preview img').style.filter = 'none';
+  imagePreview.removeAttribute('style');
   cancelButtonElement.addEventListener('click', closeImageOverlay);
   document.addEventListener('keydown', onDocumentKeyDown);
-});
-
-const pristine = new Pristine(formElement, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload--invalid',
-  successClass: 'img-upload--valid',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-  errorTextClass: 'img-upload__error'
 });
 
 const validateComment = (value) => value.length <= MAX_COMMENT_LENGTH;
@@ -82,10 +86,18 @@ pristine.addValidator(hashtagField, validateHashtagsCount, 'Слишком мн�
 pristine.addValidator(hashtagField, validateHashtags, 'Есть ошибочный хэш-тег');
 pristine.addValidator(hashtagField, validateHashtagsUniqueness, 'Такой хэш-тег уже был');
 
-formElement.addEventListener('submit', (evt) => {
+formElement.addEventListener('submit', async(evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
+    submitButton.disabled = true;
+    await sendData(new FormData(formElement))
+      .then(() => {
+        showSuccessMessage();
+        commentField.value = '';
+        hashtagField.value = '';
+      })
+      .catch(() => showErrorMessage());
+    submitButton.disabled = false;
     closeImageOverlay();
-    evt.target.reset();
   }
 });
