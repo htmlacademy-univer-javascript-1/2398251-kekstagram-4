@@ -1,11 +1,11 @@
-import {renderTemplates} from './thumbnail.js';
 import {getData} from './api.js';
 import './form.js';
 import './scale.js';
+import { showSortedPictures } from './sort-gallery.js';
 
 const load = async () => {
   try {
-    renderTemplates(await getData());
+    showSortedPictures(await getData());
   }
   catch (err){
     const alertMessage = document.querySelector('#alert').content;
