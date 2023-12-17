@@ -60,7 +60,7 @@ imageUploadInput.addEventListener('change', () => {
 
 const validateComment = (value) => value.length <= MAX_COMMENT_LENGTH;
 
-pristine.addValidator(commentField, validateComment, 'Комментарий не более 140 символов');
+pristine.addValidator(commentField, validateComment, `Комментарий не более ${MAX_COMMENT_LENGTH} символов`);
 
 const validateHashtagsCount = (value) => value.trim().split(' ').length <= MAX_HASHTAGS_COUNT;
 

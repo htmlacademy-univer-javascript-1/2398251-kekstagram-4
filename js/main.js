@@ -2,6 +2,7 @@ import {getData} from './api.js';
 import './form.js';
 import './scale.js';
 import { showSortedPictures } from './sort-gallery.js';
+import './new-picture.js';
 
 const load = async () => {
   try {
