@@ -1,5 +1,5 @@
 import {renderTemplates} from './thumbnail.js';
-import {debounce, getRandomArrayElement} from './util.js';
+import {debounce, getRandomElements} from './util.js';
 
 const RANDOM_PICTURES = 10;
 
@@ -9,7 +9,7 @@ const randomFilter = document.querySelector('#filter-random');
 const discussedFilter = document.querySelector('#filter-discussed');
 
 const sortByComments = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
-const getSortedPhoto = (photo) => photo.slice().sort(sortByComments);
+const getSortedPhotos = (photo) => photo.slice().sort(sortByComments);
 
 const removePictures = () => {
   const picture = document.querySelectorAll('.picture');
@@ -18,7 +18,7 @@ const removePictures = () => {
   });
 };
 
-const changePicture = (array, button) => {
+const changePictures = (array, button) => {
   removePictures();
   const activeFilterButton = document.querySelector('.img-filters__button--active');
   activeFilterButton.classList.remove('img-filters__button--active');
@@ -31,15 +31,15 @@ const showSortedPictures = (pictures) => {
   filterElement.classList.remove('img-filters--inactive');
 
   defaultfFilter.addEventListener('click', debounce(() => {
-    changePicture(pictures, defaultfFilter);
+    changePictures(pictures, defaultfFilter);
   }));
 
   randomFilter.addEventListener('click', debounce(() => {
-    changePicture(getRandomArrayElement(pictures, RANDOM_PICTURES), randomFilter);
+    changePictures(getRandomElements(pictures, RANDOM_PICTURES), randomFilter);
   }));
 
   discussedFilter.addEventListener('click', debounce(() => {
-    changePicture(getSortedPhoto(pictures), discussedFilter);
+    changePictures(getSortedPhotos(pictures), discussedFilter);
   }));
 };
 

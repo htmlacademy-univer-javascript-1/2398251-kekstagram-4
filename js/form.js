@@ -4,6 +4,7 @@ import {showSuccessMessage, showErrorMessage} from './message.js';
 
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_COMMENT_LENGTH = 140;
+const HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const bodyElement = document.querySelector('body');
 const formElement = document.querySelector('.img-upload__form');
@@ -14,7 +15,6 @@ const commentField = formElement.querySelector('.text__description');
 const hashtagField = formElement.querySelector('.text__hashtags');
 const imagePreview = document.querySelector('.img-upload__preview img');
 const submitButton = formElement.querySelector('.img-upload__submit');
-const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
@@ -64,18 +64,18 @@ pristine.addValidator(commentField, validateComment, `Комментарий н�
 
 const validateHashtagsCount = (value) => value.trim().split(' ').length <= MAX_HASHTAGS_COUNT;
 
-const validateHashtags = (value) => value.trim() === '' ? true : value.trim().split(' ').every((hashtag) => hashtagRegExp.test(hashtag));
+const validateHashtags = (value) => value.trim() === '' ? true : value.trim().split(' ').every((hashtag) => HASHTAG_REGEXP.test(hashtag));
 
 const validateHashtagsUniqueness  = (value) => {
   const hashtags = value.trim().split(' ');
-  const tempArr = [];
+  const tempElements = [];
 
   for (let i = 0; i < hashtags.length; i++){
-    if(tempArr.includes(hashtags[i])){
+    if(tempElements.includes(hashtags[i])){
       return false;
     }
     else {
-      tempArr.push(hashtags[i]);
+      tempElements.push(hashtags[i]);
     }
   }
 

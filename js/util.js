@@ -13,17 +13,17 @@ const getRandomInteger = (a, b) => {
 //Обработчик события клика на Escape
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const getRandomArrayElement = (pictures, count) => {
-  const copiedArray = pictures.slice();
-  const randomArrayElements = [];
+const getRandomElements = (pictures, count) => {
+  const copiedElements = pictures.slice();
+  const randomElements = [];
 
   for (let i = 0; i < count; i++) {
-    const randomIndex = getRandomInteger(0, copiedArray.length - 1);
-    randomArrayElements.push(copiedArray[randomIndex]);
-    copiedArray.splice(randomIndex, 1);
+    const randomIndex = getRandomInteger(0, copiedElements.length - 1);
+    randomElements.push(copiedElements[randomIndex]);
+    copiedElements.splice(randomIndex, 1);
   }
 
-  return randomArrayElements;
+  return randomElements;
 };
 
 const debounce = (callback, timeoutDelay = DELAY) => {
@@ -34,7 +34,7 @@ const debounce = (callback, timeoutDelay = DELAY) => {
   };
 };
 
-export {getRandomArrayElement};
+export {getRandomElements};
 export {getRandomInteger};
 export {isEscapeKey};
 export {debounce};
